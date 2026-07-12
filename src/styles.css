@@ -1290,3 +1290,54 @@ button {
   font-size: 12px;
   line-height: 1.45;
 }
+
+
+.build-progress-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  background: rgb(0 0 0 / 18%);
+}
+
+.build-progress-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: min(520px, calc(100vw - 40px));
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--panel-bg);
+  padding: 18px;
+  color: var(--text);
+  box-shadow: 0 24px 90px rgb(0 0 0 / 42%);
+}
+
+.build-progress-card p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.build-spinner {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  border: 3px solid var(--border);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: flow-build-spin 0.8s linear infinite;
+}
+
+@keyframes flow-build-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}

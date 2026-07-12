@@ -1,23 +1,21 @@
 {
-  "base": "Flow Language v0.13.0 with GUI registration and plugin loader fixes",
-  "fix": "Expose Tauri GUI build target and automatically select it when GUI nodes exist",
+  "base": "Flow Language v0.13 GUI build target fix",
   "changedFiles": [
+    "src-tauri/src/lib.rs",
+    "src-tauri/src/language/compiler.rs",
     "src/App.tsx",
-    "src/tauri.ts",
     "src/styles.css"
   ],
-  "behavior": {
-    "guiNodeDetection": "any node languageType starting with gui.",
-    "automaticTarget": "tauri-gui",
-    "defaultOutput": "flow_gui_program.exe",
-    "manualOptions": [
-      "rust",
-      "tauri-gui",
-      "javascript"
-    ]
-  },
+  "fixes": [
+    "async Tauri build command",
+    "spawn_blocking compiler execution",
+    "persistent Cargo target cache",
+    "unique source workspace",
+    "visible build progress",
+    "double-click prevention"
+  ],
   "validation": {
-    "typescriptBuild": "passed",
-    "cargoCheck": "not run because cargo is unavailable in the artifact environment"
+    "typescript": "passed",
+    "cargoCheck": "not run because cargo is unavailable in this environment"
   }
 }

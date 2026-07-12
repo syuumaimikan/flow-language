@@ -110,6 +110,7 @@ function Editor() {
     useState<BuildLanguage>("rust");
   const [buildOptimize, setBuildOptimize] = useState(true);
   const [buildPauseAtEnd, setBuildPauseAtEnd] = useState(false);
+  const [isBuilding, setIsBuilding] = useState(false);
   const [running, setRunning] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; kind: "pane" | "node"; nodeId?: string } | null>(null);
 
@@ -518,6 +519,10 @@ function Editor() {
   }, [installPlugin, setEdges, setNodes]);
 
   const build = useCallback(async () => {
+    if (isBuilding) {
+      return;
+    }
+
     const containsGuiNodes = nodes.some(
       (node) =>
         node.data.languageType.startsWith("gui."),
@@ -547,44 +552,78 @@ function Editor() {
       return;
     }
 
-    const result = await buildProgram(
-      serializeProgram(
-        nodes,
-        edges,
-        plugins,
-      ),
-      {
-        language:
-          effectiveLanguage,
-        outputPath,
-        optimize:
-          effectiveLanguage ===
-          "rust"
-            ? buildOptimize
-            : false,
-        pauseAtEnd:
-          effectiveLanguage ===
-          "rust" ||
-          effectiveLanguage ===
-            "javascript"
-            ? buildPauseAtEnd
-            : false,
-      },
+    setIsBuilding(true);
+    setStatus(
+      "実行ファイルを生成しています…",
     );
 
     setLogs([
       containsGuiNodes
         ? "GUIノード検出: Tauri GUI EXEとして生成"
         : `出力形式: ${effectiveLanguage}`,
-      result.success
-        ? `生成完了: ${result.outputPath}`
-        : `生成失敗: ${result.error}`,
+      effectiveLanguage === "tauri-gui"
+        ? "Cargoビルドを開始しました。初回は数分かかる場合があります。"
+        : "コンパイルを開始しました。",
+      "2回目以降はCargoキャッシュが再利用されます。",
     ]);
+
+    try {
+      const result =
+        await buildProgram(
+          serializeProgram(
+            nodes,
+            edges,
+            plugins,
+          ),
+          {
+            language:
+              effectiveLanguage,
+            outputPath,
+            optimize:
+              effectiveLanguage ===
+              "rust"
+                ? buildOptimize
+                : false,
+            pauseAtEnd:
+              effectiveLanguage ===
+                "rust" ||
+              effectiveLanguage ===
+                "javascript"
+                ? buildPauseAtEnd
+                : false,
+          },
+        );
+
+      setLogs((current) => [
+        ...current,
+        result.success
+          ? `生成完了: ${result.outputPath}`
+          : `生成失敗: ${result.error}`,
+      ]);
+
+      setStatus(
+        result.success
+          ? "実行ファイルの生成が完了しました"
+          : "実行ファイルの生成に失敗しました",
+      );
+    } catch (error) {
+      setLogs((current) => [
+        ...current,
+        `生成処理エラー: ${String(error)}`,
+      ]);
+
+      setStatus(
+        "実行ファイルの生成に失敗しました",
+      );
+    } finally {
+      setIsBuilding(false);
+    }
   }, [
     buildLanguage,
     buildOptimize,
     buildPauseAtEnd,
     edges,
+    isBuilding,
     nodes,
     plugins,
   ]);
@@ -1270,6 +1309,21 @@ function Editor() {
         </aside>
       </section>
 
+      {isBuilding && (
+        <div className="build-progress-overlay">
+          <section className="build-progress-card">
+            <div className="build-spinner" />
+            <div>
+              <strong>Tauri GUI EXEを生成中</strong>
+              <p>
+                初回はTauri依存関係のコンパイルに数分かかることがあります。
+                2回目以降はキャッシュが再利用されます。
+              </p>
+            </div>
+          </section>
+        </div>
+      )}
+
       {showDocs && (
         <NodeDocsPanel
           definitions={definitions}
@@ -1397,7 +1451,15 @@ function Editor() {
             </label>
             <div className="dialog-actions">
               <button onClick={() => setShowBuildSettings(false)}>キャンセル</button>
-              <button className="button-primary" onClick={build}>生成</button>
+              <button
+                className="button-primary"
+                onClick={build}
+                disabled={isBuilding}
+              >
+                {isBuilding
+                  ? "生成中…"
+                  : "生成"}
+              </button>
             </div>
           </section>
         </div>

@@ -685,28 +685,85 @@ fn build_tauri_gui(
     program: &FlowProgram,
     output: &Path,
 ) -> Result<(), LanguageError> {
-    let temp = std::env::temp_dir().join(format!(
-        "flow-language-export-{}",
-        std::process::id()
-    ));
+    use std::time::{
+        SystemTime,
+        UNIX_EPOCH,
+    };
 
-    if temp.exists() {
-        let _ = fs::remove_dir_all(&temp);
-    }
+    let timestamp =
+        SystemTime::now()
+            .duration_since(
+                UNIX_EPOCH,
+            )
+            .map(|value| {
+                value.as_millis()
+            })
+            .unwrap_or_default();
 
-    fs::create_dir_all(temp.join("src"))
-        .map_err(|error| compiler_error(error.to_string()))?;
+    let workspace =
+        std::env::temp_dir()
+            .join(format!(
+                "flow-language-export-{}-{}",
+                std::process::id(),
+                timestamp,
+            ));
 
-    let program_json = serde_json::to_string(program)
-        .map_err(|error| compiler_error(error.to_string()))?;
+    let target_cache =
+        std::env::temp_dir()
+            .join(
+                "flow-language-export-cache",
+            )
+            .join("target");
 
-    let html = standalone_html(&program_json);
+    fs::create_dir_all(
+        workspace.join("src"),
+    )
+    .map_err(|error| {
+        compiler_error(
+            error.to_string(),
+        )
+    })?;
 
-    fs::write(temp.join("index.html"), html)
-        .map_err(|error| compiler_error(error.to_string()))?;
+    fs::create_dir_all(
+        &target_cache,
+    )
+    .map_err(|error| {
+        compiler_error(
+            error.to_string(),
+        )
+    })?;
+
+    let program_json =
+        serde_json::to_string(
+            program,
+        )
+        .map_err(|error| {
+            compiler_error(
+                error.to_string(),
+            )
+        })?;
+
+    let html =
+        standalone_html(
+            &program_json,
+        );
 
     fs::write(
-        temp.join("Cargo.toml"),
+        workspace.join(
+            "index.html",
+        ),
+        html,
+    )
+    .map_err(|error| {
+        compiler_error(
+            error.to_string(),
+        )
+    })?;
+
+    fs::write(
+        workspace.join(
+            "Cargo.toml",
+        ),
         r#"[package]
 name = "flow_export"
 version = "0.1.0"
@@ -720,16 +777,28 @@ tauri = { version = "2", features = [] }
 serde_json = "1"
 "#,
     )
-    .map_err(|error| compiler_error(error.to_string()))?;
+    .map_err(|error| {
+        compiler_error(
+            error.to_string(),
+        )
+    })?;
 
     fs::write(
-        temp.join("build.rs"),
+        workspace.join(
+            "build.rs",
+        ),
         "fn main() { tauri_build::build() }\n",
     )
-    .map_err(|error| compiler_error(error.to_string()))?;
+    .map_err(|error| {
+        compiler_error(
+            error.to_string(),
+        )
+    })?;
 
     fs::write(
-        temp.join("src/main.rs"),
+        workspace.join(
+            "src/main.rs",
+        ),
         r#"fn main() {
     tauri::Builder::default()
         .run(tauri::generate_context!())
@@ -737,10 +806,16 @@ serde_json = "1"
 }
 "#,
     )
-    .map_err(|error| compiler_error(error.to_string()))?;
+    .map_err(|error| {
+        compiler_error(
+            error.to_string(),
+        )
+    })?;
 
     fs::write(
-        temp.join("tauri.conf.json"),
+        workspace.join(
+            "tauri.conf.json",
+        ),
         r#"{
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Flow Export",
@@ -767,39 +842,89 @@ serde_json = "1"
   }
 }"#,
     )
-    .map_err(|error| compiler_error(error.to_string()))?;
+    .map_err(|error| {
+        compiler_error(
+            error.to_string(),
+        )
+    })?;
 
-    let result = Command::new("cargo")
+    let mut command =
+        Command::new("cargo");
+
+    command
         .arg("build")
         .arg("--release")
-        .current_dir(&temp)
-        .output()
-        .map_err(|error| {
-            compiler_error(format!(
-                "生成Tauriアプリのcargo buildを起動できません: {}",
-                error
-            ))
-        })?;
+        .current_dir(
+            &workspace,
+        )
+        .env(
+            "CARGO_TARGET_DIR",
+            &target_cache,
+        );
 
-    if !result.status.success() {
-        return Err(compiler_error(
-            String::from_utf8_lossy(&result.stderr).into_owned(),
-        ));
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+
+        command.creation_flags(
+            0x08000000,
+        );
     }
 
-    let built = temp
-        .join("target")
-        .join("release")
-        .join(if cfg!(windows) {
-            "flow_export.exe"
-        } else {
-            "flow_export"
-        });
+    let result =
+        command
+            .output()
+            .map_err(|error| {
+                compiler_error(
+                    format!(
+                        "生成Tauriアプリのcargo buildを起動できません: {}",
+                        error,
+                    ),
+                )
+            })?;
 
-    fs::copy(&built, output)
-        .map_err(|error| compiler_error(error.to_string()))?;
+    if !result.status.success() {
+        let _ =
+            fs::remove_dir_all(
+                &workspace,
+            );
 
-    let _ = fs::remove_dir_all(&temp);
+        return Err(
+            compiler_error(
+                String::from_utf8_lossy(
+                    &result.stderr,
+                )
+                .into_owned(),
+            ),
+        );
+    }
+
+    let built =
+        target_cache
+            .join("release")
+            .join(
+                if cfg!(windows) {
+                    "flow_export.exe"
+                } else {
+                    "flow_export"
+                },
+            );
+
+    fs::copy(
+        &built,
+        output,
+    )
+    .map_err(|error| {
+        compiler_error(
+            error.to_string(),
+        )
+    })?;
+
+    let _ =
+        fs::remove_dir_all(
+            &workspace,
+        );
+
     Ok(())
 }
 

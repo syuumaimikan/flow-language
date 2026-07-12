@@ -36,23 +36,45 @@ fn execute_program(
 }
 
 #[tauri::command]
-fn build_program(
+async fn build_program(
     program: FlowProgram,
     settings: BuildSettings,
 ) -> BuildResult {
-    let output_path = settings.output_path.clone();
+    let output_path =
+        settings.output_path.clone();
 
-    match compile_program(&program, &settings) {
-        Ok(()) => BuildResult {
+    let result =
+        tauri::async_runtime::spawn_blocking(
+            move || {
+                compile_program(
+                    &program,
+                    &settings,
+                )
+            },
+        )
+        .await;
+
+    match result {
+        Ok(Ok(())) => BuildResult {
             success: true,
-            output_path: Some(output_path),
+            output_path:
+                Some(output_path),
             error: None,
+        },
+
+        Ok(Err(error)) => BuildResult {
+            success: false,
+            output_path: None,
+            error:
+                Some(error.to_string()),
         },
 
         Err(error) => BuildResult {
             success: false,
             output_path: None,
-            error: Some(error.to_string()),
+            error: Some(format!(
+                "生成処理スレッドが異常終了しました: {error}"
+            )),
         },
     }
 }
