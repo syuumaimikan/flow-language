@@ -195,4 +195,4 @@ docs/images/debugger.png
 
 # 作者
 
-GitHub: **YOUR_NAME**
+GitHub: **syuumaimikan**
