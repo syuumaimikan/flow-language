@@ -1,19 +1,23 @@
 {
-  "base": "Flow Language v0.13.0 with GUI registration fix",
-  "fix": "Validate recursive plugin manifests and skip only invalid entries",
+  "base": "Flow Language v0.13.0 with GUI registration and plugin loader fixes",
+  "fix": "Expose Tauri GUI build target and automatically select it when GUI nodes exist",
   "changedFiles": [
-    "src-tauri/src/lib.rs",
-    "src/App.tsx"
+    "src/App.tsx",
+    "src/tauri.ts",
+    "src/styles.css"
   ],
   "behavior": {
-    "invalidJson": "skipped",
-    "nonPluginJson": "skipped",
-    "invalidManifest": "skipped",
-    "otherPlugins": "continue loading",
-    "frontendLog": "shows loaded and skipped counts"
+    "guiNodeDetection": "any node languageType starting with gui.",
+    "automaticTarget": "tauri-gui",
+    "defaultOutput": "flow_gui_program.exe",
+    "manualOptions": [
+      "rust",
+      "tauri-gui",
+      "javascript"
+    ]
   },
   "validation": {
-    "cargoCheck": "not run because cargo is unavailable in this environment",
-    "typescript": "source patch generated; run npm build after applying"
+    "typescriptBuild": "passed",
+    "cargoCheck": "not run because cargo is unavailable in the artifact environment"
   }
 }

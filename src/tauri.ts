@@ -21,14 +21,31 @@ export const loadInstalledPlugins = () =>
 export async function selectBuildOutput(
   language: BuildSettings["language"],
 ): Promise<string | null> {
-  const isRust = language === "rust";
+  const isExecutable =
+    language === "rust" ||
+    language === "tauri-gui";
+
+  const defaultPath =
+    language === "tauri-gui"
+      ? "flow_gui_program.exe"
+      : language === "rust"
+        ? "flow_program.exe"
+        : "flow_program.js";
 
   return save({
-    defaultPath: isRust ? "flow_program.exe" : "flow_program.js",
+    defaultPath,
     filters: [
       {
-        name: isRust ? "Windows Executable" : "JavaScript",
-        extensions: [isRust ? "exe" : "js"],
+        name: isExecutable
+          ? language === "tauri-gui"
+            ? "Tauri GUI Executable"
+            : "Windows Console Executable"
+          : "JavaScript",
+        extensions: [
+          isExecutable
+            ? "exe"
+            : "js",
+        ],
       },
     ],
   });

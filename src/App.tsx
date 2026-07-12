@@ -518,20 +518,68 @@ function Editor() {
   }, [installPlugin, setEdges, setNodes]);
 
   const build = useCallback(async () => {
-    const outputPath = await selectBuildOutput(buildLanguage);
-    if (!outputPath) return;
+    const containsGuiNodes = nodes.some(
+      (node) =>
+        node.data.languageType.startsWith("gui."),
+    );
+
+    const effectiveLanguage: BuildLanguage =
+      containsGuiNodes
+        ? "tauri-gui"
+        : buildLanguage;
+
+    if (
+      containsGuiNodes &&
+      buildLanguage !== "tauri-gui"
+    ) {
+      setBuildLanguage("tauri-gui");
+      setStatus(
+        "GUIノードを検出したため、Tauri GUI EXEへ自動切り替えました",
+      );
+    }
+
+    const outputPath =
+      await selectBuildOutput(
+        effectiveLanguage,
+      );
+
+    if (!outputPath) {
+      return;
+    }
 
     const result = await buildProgram(
-      serializeProgram(nodes, edges, plugins),
+      serializeProgram(
+        nodes,
+        edges,
+        plugins,
+      ),
       {
-        language: buildLanguage,
+        language:
+          effectiveLanguage,
         outputPath,
-        optimize: buildOptimize,
-        pauseAtEnd: buildPauseAtEnd,
+        optimize:
+          effectiveLanguage ===
+          "rust"
+            ? buildOptimize
+            : false,
+        pauseAtEnd:
+          effectiveLanguage ===
+          "rust" ||
+          effectiveLanguage ===
+            "javascript"
+            ? buildPauseAtEnd
+            : false,
       },
     );
 
-    setLogs([result.success ? `生成完了: ${result.outputPath}` : `生成失敗: ${result.error}`]);
+    setLogs([
+      containsGuiNodes
+        ? "GUIノード検出: Tauri GUI EXEとして生成"
+        : `出力形式: ${effectiveLanguage}`,
+      result.success
+        ? `生成完了: ${result.outputPath}`
+        : `生成失敗: ${result.error}`,
+    ]);
   }, [
     buildLanguage,
     buildOptimize,
@@ -1318,9 +1366,18 @@ function Editor() {
                 value={buildLanguage}
                 onChange={(e) => setBuildLanguage(e.target.value as BuildLanguage)}
               >
-                <option value="rust">Rust / EXE</option>
+                <option value="rust">Rust Console / EXE</option>
+                <option value="tauri-gui">Tauri GUI / EXE</option>
                 <option value="javascript">JavaScript</option>
               </select>
+              {nodes.some(
+                (node) =>
+                  node.data.languageType.startsWith("gui."),
+              ) && (
+                <small className="build-format-hint">
+                  GUIノードがあるため、生成時はTauri GUI / EXEが使用されます。
+                </small>
+              )}
             </label>
             <label className="check-row">
               <input
