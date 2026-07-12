@@ -275,13 +275,26 @@ function Editor() {
     void (async () => {
       try {
         const files = await loadInstalledPlugins();
+        let loadedCount = 0;
+        const skipped: string[] = [];
 
-        for (const text of files) {
-          await installPlugin(JSON.parse(text) as PluginManifest);
+        for (const [index, text] of files.entries()) {
+          try {
+            const plugin = JSON.parse(text) as PluginManifest;
+            validatePlugin(plugin);
+            await installPlugin(plugin);
+            loadedCount += 1;
+          } catch (error) {
+            skipped.push(
+              `#${index + 1}: ${String(error)}`,
+            );
+          }
         }
 
         setLogs([
-          `起動時プラグイン: ${files.length}個`,
+          `起動時プラグイン: ${loadedCount}個`,
+          `スキップ: ${skipped.length}個`,
+          ...skipped.slice(0, 10),
           `モジュール: ${getLoadedModuleIds().join(", ") || "なし"}`,
         ]);
       } catch (error) {

@@ -119,25 +119,180 @@ fn collect_plugin_manifests(
         }
 
         let contents =
-            fs::read_to_string(&path)
-                .map_err(|error| {
-                    format!(
-                        "{}を読めません: {}",
+            match fs::read_to_string(&path) {
+                Ok(contents) => contents,
+                Err(error) => {
+                    eprintln!(
+                        "プラグイン候補を読めないためスキップします: {}: {}",
                         path.display(),
                         error,
-                    )
-                })?;
+                    );
 
-        serde_json::from_str::<
-            serde_json::Value,
-        >(&contents)
-        .map_err(|error| {
-            format!(
-                "{}のJSONが不正です: {}",
+                    continue;
+                }
+            };
+
+        let value =
+            match serde_json::from_str::<
+                serde_json::Value,
+            >(&contents)
+            {
+                Ok(value) => value,
+                Err(error) => {
+                    eprintln!(
+                        "JSONが不正なためプラグイン候補をスキップします: {}: {}",
+                        path.display(),
+                        error,
+                    );
+
+                    continue;
+                }
+            };
+
+        let object =
+            match value.as_object() {
+                Some(object) => object,
+                None => {
+                    eprintln!(
+                        "JSONオブジェクトではないためプラグイン候補をスキップします: {}",
+                        path.display(),
+                    );
+
+                    continue;
+                }
+            };
+
+        let has_required_metadata =
+            object
+                .get("id")
+                .and_then(
+                    serde_json::Value::as_str,
+                )
+                .is_some_and(|value| {
+                    !value.trim().is_empty()
+                })
+                &&
+            object
+                .get("name")
+                .and_then(
+                    serde_json::Value::as_str,
+                )
+                .is_some_and(|value| {
+                    !value.trim().is_empty()
+                })
+                &&
+            object
+                .get("version")
+                .and_then(
+                    serde_json::Value::as_str,
+                )
+                .is_some_and(|value| {
+                    !value.trim().is_empty()
+                });
+
+        let has_nodes =
+            object
+                .get("nodes")
+                .and_then(
+                    serde_json::Value::as_array,
+                )
+                .is_some();
+
+        if !has_required_metadata || !has_nodes {
+            eprintln!(
+                "プラグインmanifestではないJSONをスキップします: {}",
                 path.display(),
-                error,
-            )
-        })?;
+            );
+
+            continue;
+        }
+
+        let valid_nodes =
+            object
+                .get("nodes")
+                .and_then(
+                    serde_json::Value::as_array,
+                )
+                .is_some_and(|nodes| {
+                    nodes.iter().all(
+                        |node| {
+                            let Some(node) =
+                                node.as_object()
+                            else {
+                                return false;
+                            };
+
+                            node
+                                .get("languageType")
+                                .and_then(
+                                    serde_json::Value::as_str,
+                                )
+                                .is_some_and(
+                                    |value| {
+                                        !value
+                                            .trim()
+                                            .is_empty()
+                                    },
+                                )
+                                &&
+                            node
+                                .get("title")
+                                .and_then(
+                                    serde_json::Value::as_str,
+                                )
+                                .is_some_and(
+                                    |value| {
+                                        !value
+                                            .trim()
+                                            .is_empty()
+                                    },
+                                )
+                                &&
+                            node
+                                .get("category")
+                                .and_then(
+                                    serde_json::Value::as_str,
+                                )
+                                .is_some_and(
+                                    |value| {
+                                        !value
+                                            .trim()
+                                            .is_empty()
+                                    },
+                                )
+                                &&
+                            node
+                                .get("inputs")
+                                .and_then(
+                                    serde_json::Value::as_array,
+                                )
+                                .is_some()
+                                &&
+                            node
+                                .get("outputs")
+                                .and_then(
+                                    serde_json::Value::as_array,
+                                )
+                                .is_some()
+                                &&
+                            node
+                                .get("defaultProperties")
+                                .and_then(
+                                    serde_json::Value::as_object,
+                                )
+                                .is_some()
+                        },
+                    )
+                });
+
+        if !valid_nodes {
+            eprintln!(
+                "ノード定義が不正なためプラグインをスキップします: {}",
+                path.display(),
+            );
+
+            continue;
+        }
 
         manifests.push(contents);
     }

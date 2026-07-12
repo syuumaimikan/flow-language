@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CSharpPlugin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+19def57a7e2bd161ca96e344b0941af8333a511f")]
 [assembly: System.Reflection.AssemblyProductAttribute("CSharpPlugin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CSharpPlugin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,25 +1,19 @@
 {
-  "base": "Flow Language v0.13.0 with core value registration fix",
-  "fix": "Register and compile built-in GUI nodes",
-  "registeredNodeTypes": [
-    "gui.label",
-    "gui.button",
-    "gui.input",
-    "gui.row",
-    "gui.column",
-    "gui.window",
-    "gui.show"
-  ],
+  "base": "Flow Language v0.13.0 with GUI registration fix",
+  "fix": "Validate recursive plugin manifests and skip only invalid entries",
   "changedFiles": [
-    "src-tauri/src/language/executor.rs",
-    "src-tauri/src/language/compiler.rs"
+    "src-tauri/src/lib.rs",
+    "src/App.tsx"
   ],
-  "exportBehavior": {
-    "tauri-gui": "supported",
-    "rust": "returns a clear unsupported-output error",
-    "javascript": "returns a clear unsupported-output error"
+  "behavior": {
+    "invalidJson": "skipped",
+    "nonPluginJson": "skipped",
+    "invalidManifest": "skipped",
+    "otherPlugins": "continue loading",
+    "frontendLog": "shows loaded and skipped counts"
   },
   "validation": {
-    "cargoCheck": "not run because cargo is unavailable in this environment"
+    "cargoCheck": "not run because cargo is unavailable in this environment",
+    "typescript": "source patch generated; run npm build after applying"
   }
 }
