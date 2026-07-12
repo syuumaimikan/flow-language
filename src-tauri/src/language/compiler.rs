@@ -1124,6 +1124,25 @@ for (const n of order) {{
     case 'core.array': out.value=Array.isArray(p.value)?structuredClone(p.value):[]; break;
     case 'core.object': out.value=p.value&&typeof p.value==='object'&&!Array.isArray(p.value)?structuredClone(p.value):{{}}; break;
     case 'math.add': out.result=Number(i.a)+Number(i.b); break;
+
+    case 'array.push':
+      out.result=[
+        ...(Array.isArray(i.array)?i.array:[]),
+        i.value
+      ];
+      break;
+
+    case 'string.concat':
+      out.result=String(i.a??'')+String(i.b??'');
+      break;
+
+    case 'string.uppercase':
+      out.result=String(i.value??'').toUpperCase();
+      break;
+
+    case 'string.trim':
+      out.result=String(i.value??'').trim();
+      break;
     case 'string.concat': out.result=String(i.a??'')+String(i.b??''); break;
     case 'logic.if': out.result=i.condition?i.whenTrue:i.whenFalse; break;
 
