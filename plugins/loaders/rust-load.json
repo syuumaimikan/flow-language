@@ -1,0 +1,34 @@
+{
+  "id": "com.flow.loader.rust",
+  "name": "Rust_Load",
+  "version": "1.0.0",
+  "enabled": true,
+  "nodes": [
+    {
+      "languageType": "loader.rust.execute",
+      "title": "Rust External",
+      "category": "ローダー/Rust",
+      "inputs": [
+        {
+          "id": "payload",
+          "label": "Payload",
+          "dataType": "object",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result",
+          "label": "Result",
+          "dataType": "object"
+        }
+      ],
+      "defaultProperties": {},
+      "runtime": {
+        "kind": "external-process",
+        "command": "plugins/loaders/rust_test.exe",
+        "args": []
+      }
+    }
+  ]
+}

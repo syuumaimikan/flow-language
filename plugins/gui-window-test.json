@@ -1,0 +1,43 @@
+{
+  "id": "com.example.gui-window-test",
+  "name": "GUI Window Test",
+  "version": "1.0.0",
+  "description": "入力文字をGUIウィンドウへ表示するテストプラグイン",
+  "enabled": true,
+  "modules": [
+    {
+      "id": "core.gui",
+      "version": "1.0.0",
+      "kind": "builtin"
+    }
+  ],
+  "nodes": [
+    {
+      "languageType": "com.example.gui.show-text",
+      "title": "Show Text Window",
+      "category": "プラグイン/GUI",
+      "description": "入力された文字を小さなGUIウィンドウへ表示",
+      "inputs": [
+        {
+          "id": "text",
+          "label": "Text",
+          "dataType": "string",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "id": "windowId",
+          "label": "Window ID",
+          "dataType": "string"
+        }
+      ],
+      "defaultProperties": {},
+      "requiredModules": ["core.gui"],
+      "runtime": {
+        "kind": "javascript",
+        "handler": "const windowId = api.createWindow({ title: 'Flow GUI Test', content: String(inputs.text), width: 440, height: 180 });\napi.log('GUIウィンドウを作成しました: ' + windowId);\nreturn { windowId };"
+      }
+    }
+  ]
+}

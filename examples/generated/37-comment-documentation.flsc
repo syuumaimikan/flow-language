@@ -1,0 +1,68 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "コメントによるドキュメント",
+  "nodes": [
+    {
+      "id": "comment",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "data": {
+        "languageType": "core.comment",
+        "title": "Comment",
+        "parallel": false,
+        "breakpoint": false,
+        "comment": "このサンプルは日本語コメントの入力と保存を確認します。\nIME変換中はノード状態を更新しないため、文字が分離しません。"
+      }
+    },
+    {
+      "id": "text",
+      "type": "flowNode",
+      "position": {
+        "x": 360,
+        "y": 100
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "parallel": false,
+        "breakpoint": false,
+        "value": "コメントは実行されません"
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 670,
+        "y": 100
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "parallel": false,
+        "breakpoint": false,
+        "executionOrder": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "text",
+      "sourceHandle": "value",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.82
+  }
+}

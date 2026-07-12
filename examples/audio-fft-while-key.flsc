@@ -1,0 +1,169 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "audio-fft-loop",
+  "nodes": [
+    {
+      "id": "loop-group",
+      "type": "group",
+      "position": {
+        "x": 100,
+        "y": 80
+      },
+      "style": {
+        "width": 860,
+        "height": 430
+      },
+      "data": {
+        "languageType": "ui.group",
+        "title": "Group",
+        "tag": "Audio FFT WHILE",
+        "executionMode": "while-key",
+        "stopKey": "Escape",
+        "maxIterations": 10000
+      }
+    },
+    {
+      "id": "audio-input",
+      "type": "flowNode",
+      "parentId": "loop-group",
+      "extent": "parent",
+      "position": {
+        "x": 70,
+        "y": 150
+      },
+      "data": {
+        "languageType": "com.example.audio.capture",
+        "title": "Audio Signal Input",
+        "sampleCount": 1024,
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "fft",
+      "type": "flowNode",
+      "parentId": "loop-group",
+      "extent": "parent",
+      "position": {
+        "x": 330,
+        "y": 150
+      },
+      "data": {
+        "languageType": "com.example.audio.fft",
+        "title": "FFT",
+        "bins": 64,
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "parentId": "loop-group",
+      "extent": "parent",
+      "position": {
+        "x": 600,
+        "y": 150
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "executionOrder": 0,
+        "parallel": false,
+        "breakpoint": false
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-audio-fft",
+      "source": "audio-input",
+      "sourceHandle": "samples",
+      "target": "fft",
+      "targetHandle": "samples"
+    },
+    {
+      "id": "edge-fft-print",
+      "source": "fft",
+      "sourceHandle": "spectrum",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [
+    {
+      "id": "com.example.audio-fft",
+      "name": "Audio FFT Test",
+      "version": "1.0.0",
+      "enabled": true,
+      "modules": [
+        {
+          "id": "browser.audio",
+          "version": "1.0.0",
+          "kind": "webaudio"
+        }
+      ],
+      "nodes": [
+        {
+          "languageType": "com.example.audio.capture",
+          "title": "Audio Signal Input",
+          "category": "プラグイン/音声",
+          "description": "マイクから時間領域の音声信号を取得",
+          "inputs": [],
+          "outputs": [
+            {
+              "id": "samples",
+              "label": "Samples",
+              "dataType": "array"
+            }
+          ],
+          "defaultProperties": {
+            "sampleCount": 1024
+          },
+          "requiredModules": [
+            "browser.audio"
+          ],
+          "runtime": {
+            "kind": "javascript",
+            "handler": "const stream=await navigator.mediaDevices.getUserMedia({audio:true});\nconst context=modules['browser.audio'];\nif(context.state==='suspended') await context.resume();\nconst source=context.createMediaStreamSource(stream);\nconst analyser=context.createAnalyser();\nanalyser.fftSize=Math.max(32,Math.min(32768,Number(properties.sampleCount||1024)));\nsource.connect(analyser);\nconst data=new Float32Array(analyser.fftSize);\nawait new Promise(r=>setTimeout(r,250));\nanalyser.getFloatTimeDomainData(data);\nstream.getTracks().forEach(t=>t.stop());\nsource.disconnect();\nreturn {samples:Array.from(data)};"
+          }
+        },
+        {
+          "languageType": "com.example.audio.fft",
+          "title": "FFT",
+          "category": "プラグイン/音声",
+          "description": "入力配列へ単純DFTを適用するテスト実装",
+          "inputs": [
+            {
+              "id": "samples",
+              "label": "Samples",
+              "dataType": "array",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "id": "spectrum",
+              "label": "Spectrum",
+              "dataType": "array"
+            }
+          ],
+          "defaultProperties": {
+            "bins": 64
+          },
+          "runtime": {
+            "kind": "javascript",
+            "handler": "const x=Array.isArray(inputs.samples)?inputs.samples:[];\nconst bins=Math.max(1,Math.min(Number(properties.bins||64),Math.floor(x.length/2)));\nconst spectrum=[];\nfor(let k=0;k<bins;k++){\n let re=0,im=0;\n for(let n=0;n<x.length;n++){\n  const a=2*Math.PI*k*n/x.length;\n  re+=Number(x[n])*Math.cos(a);\n  im-=Number(x[n])*Math.sin(a);\n }\n spectrum.push(Math.sqrt(re*re+im*im)/Math.max(1,x.length));\n}\nreturn {spectrum};"
+          }
+        }
+      ]
+    }
+  ],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.9
+  }
+}

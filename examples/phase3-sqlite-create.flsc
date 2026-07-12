@@ -1,0 +1,118 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "phase3-sqlite-create",
+  "nodes": [
+    {
+      "id": "path",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 80
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "value": "flow_phase3.sqlite",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "sql",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "value": "CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, text TEXT NOT NULL)",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "params",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 390
+      },
+      "data": {
+        "languageType": "core.array",
+        "title": "Array",
+        "value": [],
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "execute",
+      "type": "flowNode",
+      "position": {
+        "x": 430,
+        "y": 190
+      },
+      "data": {
+        "languageType": "database.sqlite_execute",
+        "title": "SQLite Execute",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 760,
+        "y": 210
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "executionOrder": 0,
+        "parallel": false,
+        "breakpoint": false
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "path",
+      "sourceHandle": "value",
+      "target": "execute",
+      "targetHandle": "path"
+    },
+    {
+      "id": "e2",
+      "source": "sql",
+      "sourceHandle": "value",
+      "target": "execute",
+      "targetHandle": "sql"
+    },
+    {
+      "id": "e3",
+      "source": "params",
+      "sourceHandle": "value",
+      "target": "execute",
+      "targetHandle": "params"
+    },
+    {
+      "id": "e4",
+      "source": "execute",
+      "sourceHandle": "affected",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.8
+  }
+}

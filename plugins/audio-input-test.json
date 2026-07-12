@@ -1,0 +1,36 @@
+{
+  "id": "com.example.audio-input-test",
+  "name": "Audio Input Test",
+  "version": "1.0.0",
+  "description": "マイク音量を取得するテストプラグイン",
+  "enabled": true,
+  "modules": [
+    {
+      "id": "browser.audio",
+      "version": "1.0.0",
+      "kind": "webaudio"
+    }
+  ],
+  "nodes": [
+    {
+      "languageType": "com.example.audio.microphone-level",
+      "title": "Microphone Level",
+      "category": "プラグイン/音声",
+      "description": "約250msのマイク入力から平均音量を0〜1で出力",
+      "inputs": [],
+      "outputs": [
+        {
+          "id": "level",
+          "label": "Level",
+          "dataType": "number"
+        }
+      ],
+      "defaultProperties": {},
+      "requiredModules": ["browser.audio"],
+      "runtime": {
+        "kind": "javascript",
+        "handler": "const stream = await navigator.mediaDevices.getUserMedia({ audio: true });\nconst context = modules['browser.audio'];\nif (context.state === 'suspended') await context.resume();\nconst source = context.createMediaStreamSource(stream);\nconst analyser = context.createAnalyser();\nanalyser.fftSize = 1024;\nsource.connect(analyser);\nconst data = new Float32Array(analyser.fftSize);\nawait new Promise(resolve => setTimeout(resolve, 250));\nanalyser.getFloatTimeDomainData(data);\nconst rms = Math.sqrt(data.reduce((sum, value) => sum + value * value, 0) / data.length);\nstream.getTracks().forEach(track => track.stop());\nsource.disconnect();\nreturn { level: Math.min(1, rms * 8) };"
+      }
+    }
+  ]
+}

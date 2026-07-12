@@ -1,0 +1,34 @@
+{
+  "id": "com.example.javascript",
+  "name": "JavaScript SDK Example",
+  "version": "1.0.0",
+  "enabled": true,
+  "nodes": [
+    {
+      "languageType": "com.example.javascript.upper",
+      "title": "JavaScript Upper",
+      "category": "SDK/JavaScript",
+      "description": "入力文字列を大文字にします。",
+      "inputs": [
+        {
+          "id": "text",
+          "label": "Text",
+          "dataType": "string",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result",
+          "label": "Result",
+          "dataType": "string"
+        }
+      ],
+      "defaultProperties": {},
+      "runtime": {
+        "kind": "javascript",
+        "handler": "return { result: String(inputs.text).toUpperCase() };"
+      }
+    }
+  ]
+}

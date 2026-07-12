@@ -1,0 +1,35 @@
+{
+  "id": "com.example.python",
+  "name": "Python_Load Example",
+  "version": "1.0.0",
+  "enabled": true,
+  "nodes": [
+    {
+      "languageType": "com.example.python.run",
+      "title": "Python Execute",
+      "category": "SDK/Python",
+      "description": "Python外部プロセスABIテスト",
+      "inputs": [
+        {
+          "id": "value",
+          "label": "Value",
+          "dataType": "any",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result",
+          "label": "Result",
+          "dataType": "object"
+        }
+      ],
+      "defaultProperties": {},
+      "runtime": {
+        "kind": "external-process",
+        "command": "python",
+        "args": ["sdk/templates/python/plugin.py"]
+      }
+    }
+  ]
+}

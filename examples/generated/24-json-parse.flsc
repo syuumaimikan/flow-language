@@ -1,0 +1,74 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "JSON解析",
+  "nodes": [
+    {
+      "id": "text",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 80
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "parallel": false,
+        "breakpoint": false,
+        "value": "{\"名前\":\"花子\",\"点数\":[88,92,100]}"
+      }
+    },
+    {
+      "id": "parse",
+      "type": "flowNode",
+      "position": {
+        "x": 360,
+        "y": 100
+      },
+      "data": {
+        "languageType": "parse.json_parse",
+        "title": "Parse JSON",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 680,
+        "y": 100
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "parallel": false,
+        "breakpoint": false,
+        "executionOrder": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "text",
+      "sourceHandle": "value",
+      "target": "parse",
+      "targetHandle": "text"
+    },
+    {
+      "id": "e2",
+      "source": "parse",
+      "sourceHandle": "value",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.82
+  }
+}

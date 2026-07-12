@@ -1,0 +1,53 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "日本語文字列入力",
+  "nodes": [
+    {
+      "id": "text",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 100
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "parallel": false,
+        "breakpoint": false,
+        "value": "こんにちは、Flow Language！日本語入力テストです。"
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 330,
+        "y": 100
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "parallel": false,
+        "breakpoint": false,
+        "executionOrder": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "text",
+      "sourceHandle": "value",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.82
+  }
+}

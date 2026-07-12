@@ -1,0 +1,29 @@
+{
+  "formatVersion": 1,
+  "packages": [
+    {
+      "id": "com.example.audio-fft",
+      "name": "Audio FFT Test",
+      "version": "1.0.0",
+      "category": "Audio",
+      "description": "音声入力とFFTのテストノード",
+      "localPath": "plugins/audio-fft-test.json"
+    },
+    {
+      "id": "com.example.gui-window-test",
+      "name": "GUI Window Test",
+      "version": "1.0.0",
+      "category": "GUI",
+      "description": "文字をGUIウィンドウへ表示",
+      "localPath": "plugins/gui-window-test.json"
+    },
+    {
+      "id": "com.example.gpu-compute-test",
+      "name": "GPU Compute Test",
+      "version": "1.0.0",
+      "category": "GPU",
+      "description": "WebGPU・CUDA・OpenCL基盤",
+      "localPath": "plugins/gpu/gpu-compute-test.json"
+    }
+  ]
+}

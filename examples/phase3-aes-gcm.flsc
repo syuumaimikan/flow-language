@@ -1,0 +1,124 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "phase3-aes-gcm",
+  "nodes": [
+    {
+      "id": "text",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 80
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "value": "Flow Language secret message",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "secret",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 240
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "value": "change-this-secret",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "encrypt",
+      "type": "flowNode",
+      "position": {
+        "x": 350,
+        "y": 120
+      },
+      "data": {
+        "languageType": "crypto.aes_encrypt",
+        "title": "AES-GCM Encrypt",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "decrypt",
+      "type": "flowNode",
+      "position": {
+        "x": 680,
+        "y": 120
+      },
+      "data": {
+        "languageType": "crypto.aes_decrypt",
+        "title": "AES-GCM Decrypt",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 1020,
+        "y": 140
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "executionOrder": 0,
+        "parallel": false,
+        "breakpoint": false
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "text",
+      "sourceHandle": "value",
+      "target": "encrypt",
+      "targetHandle": "text"
+    },
+    {
+      "id": "e2",
+      "source": "secret",
+      "sourceHandle": "value",
+      "target": "encrypt",
+      "targetHandle": "secret"
+    },
+    {
+      "id": "e3",
+      "source": "encrypt",
+      "sourceHandle": "encrypted",
+      "target": "decrypt",
+      "targetHandle": "encrypted"
+    },
+    {
+      "id": "e4",
+      "source": "secret",
+      "sourceHandle": "value",
+      "target": "decrypt",
+      "targetHandle": "secret"
+    },
+    {
+      "id": "e5",
+      "source": "decrypt",
+      "sourceHandle": "text",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.8
+  }
+}

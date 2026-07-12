@@ -1,0 +1,180 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "日本語GUIウィンドウ",
+  "nodes": [
+    {
+      "id": "label-text",
+      "type": "flowNode",
+      "position": {
+        "x": 30,
+        "y": 30
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "parallel": false,
+        "breakpoint": false,
+        "value": "こんにちは！GUIノードのサンプルです。"
+      }
+    },
+    {
+      "id": "label",
+      "type": "flowNode",
+      "position": {
+        "x": 300,
+        "y": 30
+      },
+      "data": {
+        "languageType": "gui.label",
+        "title": "GUI Label",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "array",
+      "type": "flowNode",
+      "position": {
+        "x": 300,
+        "y": 220
+      },
+      "data": {
+        "languageType": "core.array",
+        "title": "Array",
+        "parallel": false,
+        "breakpoint": false,
+        "value": []
+      }
+    },
+    {
+      "id": "push",
+      "type": "flowNode",
+      "position": {
+        "x": 570,
+        "y": 100
+      },
+      "data": {
+        "languageType": "array.push",
+        "title": "Array Push",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "column",
+      "type": "flowNode",
+      "position": {
+        "x": 840,
+        "y": 100
+      },
+      "data": {
+        "languageType": "gui.column",
+        "title": "GUI Column",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "title",
+      "type": "flowNode",
+      "position": {
+        "x": 840,
+        "y": 300
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "parallel": false,
+        "breakpoint": false,
+        "value": "日本語GUI"
+      }
+    },
+    {
+      "id": "window",
+      "type": "flowNode",
+      "position": {
+        "x": 1120,
+        "y": 120
+      },
+      "data": {
+        "languageType": "gui.window",
+        "title": "GUI Window",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "show",
+      "type": "flowNode",
+      "position": {
+        "x": 1410,
+        "y": 120
+      },
+      "data": {
+        "languageType": "gui.show",
+        "title": "Show GUI",
+        "parallel": false,
+        "breakpoint": false
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "label-text",
+      "sourceHandle": "value",
+      "target": "label",
+      "targetHandle": "text"
+    },
+    {
+      "id": "e2",
+      "source": "array",
+      "sourceHandle": "value",
+      "target": "push",
+      "targetHandle": "array"
+    },
+    {
+      "id": "e3",
+      "source": "label",
+      "sourceHandle": "component",
+      "target": "push",
+      "targetHandle": "value"
+    },
+    {
+      "id": "e4",
+      "source": "push",
+      "sourceHandle": "result",
+      "target": "column",
+      "targetHandle": "children"
+    },
+    {
+      "id": "e5",
+      "source": "column",
+      "sourceHandle": "component",
+      "target": "window",
+      "targetHandle": "content"
+    },
+    {
+      "id": "e6",
+      "source": "title",
+      "sourceHandle": "value",
+      "target": "window",
+      "targetHandle": "title"
+    },
+    {
+      "id": "e7",
+      "source": "window",
+      "sourceHandle": "window",
+      "target": "show",
+      "targetHandle": "window"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.52
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "com.flow.loader.csharp",
+  "name": "Csharp_Load",
+  "version": "1.0.0",
+  "enabled": true,
+  "description": "csharp JSON stdin/stdout ABI loader",
+  "nodes": [
+    {
+      "languageType": "loader.csharp.execute",
+      "title": "Csharp External",
+      "category": "ローダー/Csharp",
+      "inputs": [
+        {
+          "id": "payload",
+          "label": "Payload",
+          "dataType": "object",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result",
+          "label": "Result",
+          "dataType": "object"
+        }
+      ],
+      "defaultProperties": {},
+      "runtime": {
+        "kind": "external-process",
+        "command": "dotnet",
+        "args": [
+          "plugins/loaders/csharp_test/CSharpTest.dll"
+        ]
+      }
+    }
+  ]
+}

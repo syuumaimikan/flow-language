@@ -1,0 +1,48 @@
+{
+  "id": "com.flow.database.mysql",
+  "name": "MySQL_Load",
+  "version": "1.0.0",
+  "description": "JSON stdin/stdout ABIを使うMySQL外部アダプターの前提プラグイン",
+  "enabled": true,
+  "nodes": [
+    {
+      "languageType": "database.mysql.query",
+      "title": "MySQL Query",
+      "category": "プラグイン/データベース",
+      "description": "接続情報、SQL、パラメーターを外部MySQLアダプターへ渡します。",
+      "inputs": [
+        {
+          "id": "connection",
+          "label": "Connection",
+          "dataType": "object",
+          "required": true
+        },
+        {
+          "id": "sql",
+          "label": "SQL",
+          "dataType": "string",
+          "required": true
+        },
+        {
+          "id": "params",
+          "label": "Params",
+          "dataType": "array",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "id": "rows",
+          "label": "Rows",
+          "dataType": "array"
+        }
+      ],
+      "defaultProperties": {},
+      "runtime": {
+        "kind": "external-process",
+        "command": "plugins/database/mysql_adapter.exe",
+        "args": []
+      }
+    }
+  ]
+}

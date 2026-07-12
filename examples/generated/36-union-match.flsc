@@ -1,0 +1,167 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "Union生成とMatch",
+  "nodes": [
+    {
+      "id": "tag",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 30
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "parallel": false,
+        "breakpoint": false,
+        "value": "success"
+      }
+    },
+    {
+      "id": "value",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 180
+      },
+      "data": {
+        "languageType": "core.object",
+        "title": "Object / Struct",
+        "parallel": false,
+        "breakpoint": false,
+        "value": {
+          "message": "成功しました",
+          "code": 200
+        }
+      }
+    },
+    {
+      "id": "union",
+      "type": "flowNode",
+      "position": {
+        "x": 390,
+        "y": 100
+      },
+      "data": {
+        "languageType": "union.create",
+        "title": "Create Union",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "cases",
+      "type": "flowNode",
+      "position": {
+        "x": 390,
+        "y": 340
+      },
+      "data": {
+        "languageType": "core.object",
+        "title": "Object / Struct",
+        "parallel": false,
+        "breakpoint": false,
+        "value": {
+          "success": "成功分岐",
+          "error": "失敗分岐"
+        }
+      }
+    },
+    {
+      "id": "default",
+      "type": "flowNode",
+      "position": {
+        "x": 720,
+        "y": 430
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "parallel": false,
+        "breakpoint": false,
+        "value": "不明な分岐"
+      }
+    },
+    {
+      "id": "match",
+      "type": "flowNode",
+      "position": {
+        "x": 760,
+        "y": 160
+      },
+      "data": {
+        "languageType": "union.match",
+        "title": "Match Union",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 1090,
+        "y": 160
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "parallel": false,
+        "breakpoint": false,
+        "executionOrder": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "tag",
+      "sourceHandle": "value",
+      "target": "union",
+      "targetHandle": "tag"
+    },
+    {
+      "id": "e2",
+      "source": "value",
+      "sourceHandle": "value",
+      "target": "union",
+      "targetHandle": "value"
+    },
+    {
+      "id": "e3",
+      "source": "union",
+      "sourceHandle": "union",
+      "target": "match",
+      "targetHandle": "union"
+    },
+    {
+      "id": "e4",
+      "source": "cases",
+      "sourceHandle": "value",
+      "target": "match",
+      "targetHandle": "cases"
+    },
+    {
+      "id": "e5",
+      "source": "default",
+      "sourceHandle": "value",
+      "target": "match",
+      "targetHandle": "default"
+    },
+    {
+      "id": "e6",
+      "source": "match",
+      "sourceHandle": "result",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.57
+  }
+}

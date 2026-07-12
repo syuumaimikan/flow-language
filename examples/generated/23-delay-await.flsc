@@ -1,0 +1,117 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "DelayとAwait",
+  "nodes": [
+    {
+      "id": "text",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 60
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "parallel": false,
+        "breakpoint": false,
+        "value": "1秒後に表示されました"
+      }
+    },
+    {
+      "id": "ms",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 220
+      },
+      "data": {
+        "languageType": "core.number",
+        "title": "Number",
+        "parallel": false,
+        "breakpoint": false,
+        "value": 1000
+      }
+    },
+    {
+      "id": "delay",
+      "type": "flowNode",
+      "position": {
+        "x": 330,
+        "y": 120
+      },
+      "data": {
+        "languageType": "async.delay",
+        "title": "Delay Promise",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "await",
+      "type": "flowNode",
+      "position": {
+        "x": 630,
+        "y": 120
+      },
+      "data": {
+        "languageType": "async.await",
+        "title": "Await",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 900,
+        "y": 120
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "parallel": false,
+        "breakpoint": false,
+        "executionOrder": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "text",
+      "sourceHandle": "value",
+      "target": "delay",
+      "targetHandle": "value"
+    },
+    {
+      "id": "e2",
+      "source": "ms",
+      "sourceHandle": "value",
+      "target": "delay",
+      "targetHandle": "milliseconds"
+    },
+    {
+      "id": "e3",
+      "source": "delay",
+      "sourceHandle": "promise",
+      "target": "await",
+      "targetHandle": "promise"
+    },
+    {
+      "id": "e4",
+      "source": "await",
+      "sourceHandle": "value",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.82
+  }
+}

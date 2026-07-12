@@ -1,0 +1,161 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "Range Iterator",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "data": {
+        "languageType": "core.number",
+        "title": "Number",
+        "parallel": false,
+        "breakpoint": false,
+        "value": 0
+      }
+    },
+    {
+      "id": "end",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 180
+      },
+      "data": {
+        "languageType": "core.number",
+        "title": "Number",
+        "parallel": false,
+        "breakpoint": false,
+        "value": 20
+      }
+    },
+    {
+      "id": "range",
+      "type": "flowNode",
+      "position": {
+        "x": 330,
+        "y": 100
+      },
+      "data": {
+        "languageType": "iterator.range",
+        "title": "Range Iterator",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "count",
+      "type": "flowNode",
+      "position": {
+        "x": 330,
+        "y": 300
+      },
+      "data": {
+        "languageType": "core.number",
+        "title": "Number",
+        "parallel": false,
+        "breakpoint": false,
+        "value": 10
+      }
+    },
+    {
+      "id": "take",
+      "type": "flowNode",
+      "position": {
+        "x": 620,
+        "y": 110
+      },
+      "data": {
+        "languageType": "iterator.take",
+        "title": "Take",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "collect",
+      "type": "flowNode",
+      "position": {
+        "x": 900,
+        "y": 110
+      },
+      "data": {
+        "languageType": "iterator.collect",
+        "title": "Collect Iterator",
+        "parallel": false,
+        "breakpoint": false,
+        "iteratorLimit": 10000
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 1220,
+        "y": 110
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "parallel": false,
+        "breakpoint": false,
+        "executionOrder": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "start",
+      "sourceHandle": "value",
+      "target": "range",
+      "targetHandle": "start"
+    },
+    {
+      "id": "e2",
+      "source": "end",
+      "sourceHandle": "value",
+      "target": "range",
+      "targetHandle": "end"
+    },
+    {
+      "id": "e3",
+      "source": "range",
+      "sourceHandle": "iterator",
+      "target": "take",
+      "targetHandle": "iterator"
+    },
+    {
+      "id": "e4",
+      "source": "count",
+      "sourceHandle": "value",
+      "target": "take",
+      "targetHandle": "count"
+    },
+    {
+      "id": "e5",
+      "source": "take",
+      "sourceHandle": "iterator",
+      "target": "collect",
+      "targetHandle": "iterator"
+    },
+    {
+      "id": "e6",
+      "source": "collect",
+      "sourceHandle": "array",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.62
+  }
+}

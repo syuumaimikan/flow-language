@@ -1,0 +1,54 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "ユーザー文字入力",
+  "nodes": [
+    {
+      "id": "input",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 80
+      },
+      "data": {
+        "languageType": "core.input_string",
+        "title": "Text Input",
+        "parallel": false,
+        "breakpoint": false,
+        "prompt": "名前を日本語で入力してください",
+        "defaultValue": "山田太郎"
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 400,
+        "y": 100
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "parallel": false,
+        "breakpoint": false,
+        "executionOrder": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "input",
+      "sourceHandle": "value",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.82
+  }
+}

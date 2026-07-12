@@ -1,0 +1,22 @@
+{
+  "id": "com.example.math-extra",
+  "name": "Math Extra",
+  "version": "1.0.0",
+  "nodes": [
+    {
+      "languageType": "com.example.multiply",
+      "title": "Multiply",
+      "category": "プラグイン/計算",
+      "description": "A × B",
+      "inputs": [
+        { "id": "a", "label": "A", "dataType": "number", "required": true },
+        { "id": "b", "label": "B", "dataType": "number", "required": true }
+      ],
+      "outputs": [
+        { "id": "result", "label": "Result", "dataType": "number" }
+      ],
+      "defaultProperties": {},
+      "expression": "a * b"
+    }
+  ]
+}

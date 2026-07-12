@@ -1,0 +1,127 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "Reduceで合計",
+  "nodes": [
+    {
+      "id": "array",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 30
+      },
+      "data": {
+        "languageType": "core.array",
+        "title": "Array",
+        "parallel": false,
+        "breakpoint": false,
+        "value": [
+          10,
+          20,
+          30,
+          40
+        ]
+      }
+    },
+    {
+      "id": "lambda",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 250
+      },
+      "data": {
+        "languageType": "function.lambda",
+        "title": "Lambda",
+        "parallel": false,
+        "breakpoint": false,
+        "functionName": "sum",
+        "parameters": "total, value",
+        "functionBody": "total + value",
+        "functionAsync": false,
+        "recursionLimit": 128
+      }
+    },
+    {
+      "id": "initial",
+      "type": "flowNode",
+      "position": {
+        "x": 360,
+        "y": 330
+      },
+      "data": {
+        "languageType": "core.number",
+        "title": "Number",
+        "parallel": false,
+        "breakpoint": false,
+        "value": 0
+      }
+    },
+    {
+      "id": "reduce",
+      "type": "flowNode",
+      "position": {
+        "x": 440,
+        "y": 120
+      },
+      "data": {
+        "languageType": "functional.reduce",
+        "title": "Reduce",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 780,
+        "y": 120
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "parallel": false,
+        "breakpoint": false,
+        "executionOrder": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "array",
+      "sourceHandle": "value",
+      "target": "reduce",
+      "targetHandle": "array"
+    },
+    {
+      "id": "e2",
+      "source": "lambda",
+      "sourceHandle": "function",
+      "target": "reduce",
+      "targetHandle": "function"
+    },
+    {
+      "id": "e3",
+      "source": "initial",
+      "sourceHandle": "value",
+      "target": "reduce",
+      "targetHandle": "initial"
+    },
+    {
+      "id": "e4",
+      "source": "reduce",
+      "sourceHandle": "result",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.68
+  }
+}

@@ -1,0 +1,202 @@
+[
+  {
+    "file": "examples/generated/01-japanese-string.flsc",
+    "name": "日本語文字列入力",
+    "description": "IMEで日本語文字列を入力してPrintへ出力します。"
+  },
+  {
+    "file": "examples/generated/02-array-mixed-values.flsc",
+    "name": "配列の行編集",
+    "description": "文字列、数値、真偽値、Null、JSONを混在させる配列例です。"
+  },
+  {
+    "file": "examples/generated/03-object-japanese-fields.flsc",
+    "name": "日本語オブジェクト入力",
+    "description": "日本語キーを持つオブジェクトの項目編集例です。"
+  },
+  {
+    "file": "examples/generated/04-add.flsc",
+    "name": "加算",
+    "description": "加算ノードの基本例です。"
+  },
+  {
+    "file": "examples/generated/05-subtract.flsc",
+    "name": "減算",
+    "description": "減算ノードの基本例です。"
+  },
+  {
+    "file": "examples/generated/06-multiply.flsc",
+    "name": "乗算",
+    "description": "乗算ノードの基本例です。"
+  },
+  {
+    "file": "examples/generated/07-divide.flsc",
+    "name": "除算",
+    "description": "除算ノードの基本例です。"
+  },
+  {
+    "file": "examples/generated/08-modulo.flsc",
+    "name": "剰余",
+    "description": "剰余ノードの基本例です。"
+  },
+  {
+    "file": "examples/generated/09-power.flsc",
+    "name": "べき乗",
+    "description": "べき乗ノードの基本例です。"
+  },
+  {
+    "file": "examples/generated/10-equal.flsc",
+    "name": "等しい",
+    "description": "比較条件「等しい」の例です。"
+  },
+  {
+    "file": "examples/generated/11-not-equal.flsc",
+    "name": "等しくない",
+    "description": "比較条件「等しくない」の例です。"
+  },
+  {
+    "file": "examples/generated/12-greater.flsc",
+    "name": "より大きい",
+    "description": "比較条件「より大きい」の例です。"
+  },
+  {
+    "file": "examples/generated/13-less-equal.flsc",
+    "name": "以下",
+    "description": "比較条件「以下」の例です。"
+  },
+  {
+    "file": "examples/generated/14-if-branch-value.flsc",
+    "name": "IFによる値選択",
+    "description": "Boolean条件に応じて2つの値から一方を選びます。"
+  },
+  {
+    "file": "examples/generated/15-logic-and.flsc",
+    "name": "論理AND",
+    "description": "2つの真偽値のANDを計算します。"
+  },
+  {
+    "file": "examples/generated/16-string-concat.flsc",
+    "name": "文字列連結",
+    "description": "文字列連結の例です。"
+  },
+  {
+    "file": "examples/generated/17-string-uppercase.flsc",
+    "name": "大文字変換",
+    "description": "大文字変換の例です。"
+  },
+  {
+    "file": "examples/generated/18-string-trim.flsc",
+    "name": "空白除去",
+    "description": "空白除去の例です。"
+  },
+  {
+    "file": "examples/generated/19-map-lambda.flsc",
+    "name": "MapとLambda",
+    "description": "配列の各要素をLambdaで2倍にします。"
+  },
+  {
+    "file": "examples/generated/20-filter-lambda.flsc",
+    "name": "FilterとLambda",
+    "description": "偶数だけを抽出します。"
+  },
+  {
+    "file": "examples/generated/21-reduce-sum.flsc",
+    "name": "Reduceで合計",
+    "description": "配列の数値をReduceで合計します。"
+  },
+  {
+    "file": "examples/generated/22-range-iterator.flsc",
+    "name": "Range Iterator",
+    "description": "0から19までのうち先頭10件を遅延収集します。"
+  },
+  {
+    "file": "examples/generated/23-delay-await.flsc",
+    "name": "DelayとAwait",
+    "description": "Promiseを作成しAwaitで完了を待ちます。"
+  },
+  {
+    "file": "examples/generated/24-json-parse.flsc",
+    "name": "JSON解析",
+    "description": "日本語を含むJSON文字列をオブジェクトへ変換します。"
+  },
+  {
+    "file": "examples/generated/25-xml-parse.flsc",
+    "name": "XML解析",
+    "description": "XML文字列をオブジェクトへ変換します。"
+  },
+  {
+    "file": "examples/generated/26-line-stream.flsc",
+    "name": "行ストリーム",
+    "description": "複数行文字列を行単位のストリームとして収集します。"
+  },
+  {
+    "file": "examples/generated/27-sha256.flsc",
+    "name": "SHA-256",
+    "description": "文字列をSHA-256でハッシュ化します。"
+  },
+  {
+    "file": "examples/generated/28-aes-encrypt-decrypt.flsc",
+    "name": "AES-GCM暗号化と復号",
+    "description": "日本語文字列をAES-GCMで暗号化して復号します。"
+  },
+  {
+    "file": "examples/generated/29-cache-set-get.flsc",
+    "name": "キャッシュ保存と取得",
+    "description": "TTL付きキャッシュへ保存しOptionを展開します。"
+  },
+  {
+    "file": "examples/generated/30-http-get.flsc",
+    "name": "HTTP GET",
+    "description": "RustバックエンドからHTTP GETを送信しステータスを表示します。"
+  },
+  {
+    "file": "examples/generated/31-sqlite-create-table.flsc",
+    "name": "SQLiteテーブル作成",
+    "description": "SQLiteデータベースへテーブルを作成します。"
+  },
+  {
+    "file": "examples/generated/32-orm-select-builder.flsc",
+    "name": "ORM SELECT生成",
+    "description": "オブジェクト入力から安全なSELECT SQLを生成します。"
+  },
+  {
+    "file": "examples/generated/33-gui-japanese-window.flsc",
+    "name": "日本語GUIウィンドウ",
+    "description": "日本語ラベルを含むGUIウィンドウを表示します。"
+  },
+  {
+    "file": "examples/generated/34-gpu-vector-add.flsc",
+    "name": "GPUベクトル加算",
+    "description": "WebGPUまたはCPUフォールバックで配列を加算します。"
+  },
+  {
+    "file": "examples/generated/35-option-some-unwrap.flsc",
+    "name": "Option Someと展開",
+    "description": "Some値をUnwrap Orで取り出します。"
+  },
+  {
+    "file": "examples/generated/36-union-match.flsc",
+    "name": "Union生成とMatch",
+    "description": "判別可能Unionを作成してタグに応じた値を選びます。"
+  },
+  {
+    "file": "examples/generated/37-comment-documentation.flsc",
+    "name": "コメントによるドキュメント",
+    "description": "複数行の日本語コメントを含むプロジェクトです。"
+  },
+  {
+    "file": "examples/generated/38-nested-json-data.flsc",
+    "name": "ネストしたJSONデータ",
+    "description": "JSON編集モードでネスト構造を編集する例です。"
+  },
+  {
+    "file": "examples/generated/39-user-text-input.flsc",
+    "name": "ユーザー文字入力",
+    "description": "実行時に日本語文字列を受け取ります。"
+  },
+  {
+    "file": "examples/generated/40-lambda-japanese-format.flsc",
+    "name": "日本語メッセージLambda",
+    "description": "Lambdaから日本語テンプレート文字列を返します。"
+  }
+]

@@ -1,0 +1,62 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "日本語オブジェクト入力",
+  "nodes": [
+    {
+      "id": "object",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 60
+      },
+      "data": {
+        "languageType": "core.object",
+        "title": "Object / Struct",
+        "parallel": false,
+        "breakpoint": false,
+        "value": {
+          "名前": "山田太郎",
+          "年齢": 17,
+          "在籍": true,
+          "科目": [
+            "数学",
+            "情報",
+            "英語"
+          ]
+        }
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 650,
+        "y": 120
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "parallel": false,
+        "breakpoint": false,
+        "executionOrder": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "object",
+      "sourceHandle": "value",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.7
+  }
+}

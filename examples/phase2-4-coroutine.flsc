@@ -1,0 +1,143 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "phase2-4-coroutine",
+  "nodes": [
+    {
+      "id": "coroutine-fn",
+      "type": "flowNode",
+      "position": {
+        "x": 60,
+        "y": 80
+      },
+      "data": {
+        "languageType": "function.lambda",
+        "title": "Lambda",
+        "functionName": "counterCoroutine",
+        "parameters": "index, input, state",
+        "functionBody": "({ value: index, state: (state ?? 0) + 1, done: index >= 9 })",
+        "functionAsync": false,
+        "recursionLimit": 128,
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "initial-state",
+      "type": "flowNode",
+      "position": {
+        "x": 60,
+        "y": 270
+      },
+      "data": {
+        "languageType": "core.number",
+        "title": "Number",
+        "value": 0,
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "create",
+      "type": "flowNode",
+      "position": {
+        "x": 340,
+        "y": 130
+      },
+      "data": {
+        "languageType": "coroutine.create",
+        "title": "Create Coroutine",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "limit",
+      "type": "flowNode",
+      "position": {
+        "x": 350,
+        "y": 330
+      },
+      "data": {
+        "languageType": "core.number",
+        "title": "Number",
+        "value": 20,
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "collect",
+      "type": "flowNode",
+      "position": {
+        "x": 650,
+        "y": 150
+      },
+      "data": {
+        "languageType": "coroutine.collect",
+        "title": "Collect Coroutine",
+        "parallel": false,
+        "breakpoint": false
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 950,
+        "y": 150
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "executionOrder": 0,
+        "parallel": false,
+        "breakpoint": false
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "coroutine-fn",
+      "sourceHandle": "function",
+      "target": "create",
+      "targetHandle": "function"
+    },
+    {
+      "id": "e2",
+      "source": "initial-state",
+      "sourceHandle": "value",
+      "target": "create",
+      "targetHandle": "initialState"
+    },
+    {
+      "id": "e3",
+      "source": "create",
+      "sourceHandle": "coroutine",
+      "target": "collect",
+      "targetHandle": "coroutine"
+    },
+    {
+      "id": "e4",
+      "source": "limit",
+      "sourceHandle": "value",
+      "target": "collect",
+      "targetHandle": "limit"
+    },
+    {
+      "id": "e5",
+      "source": "collect",
+      "sourceHandle": "values",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.9
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "com.flow.loader.java",
+  "name": "Java_Load",
+  "version": "1.0.0",
+  "enabled": true,
+  "description": "java JSON stdin/stdout ABI loader",
+  "nodes": [
+    {
+      "languageType": "loader.java.execute",
+      "title": "Java External",
+      "category": "ローダー/Java",
+      "inputs": [
+        {
+          "id": "payload",
+          "label": "Payload",
+          "dataType": "object",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result",
+          "label": "Result",
+          "dataType": "object"
+        }
+      ],
+      "defaultProperties": {},
+      "runtime": {
+        "kind": "external-process",
+        "command": "java",
+        "args": [
+          "-jar",
+          "plugins/loaders/java_test.jar"
+        ]
+      }
+    }
+  ]
+}

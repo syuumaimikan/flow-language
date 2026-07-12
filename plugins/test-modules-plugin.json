@@ -1,0 +1,52 @@
+{
+  "id": "com.example.flow.module-test",
+  "name": "Module Dedup Test",
+  "version": "1.0.0",
+  "modules": [
+    {
+      "id": "core.math",
+      "version": "1.0.0",
+      "kind": "builtin"
+    },
+    {
+      "id": "browser.audio",
+      "version": "1.0.0",
+      "kind": "webaudio"
+    }
+  ],
+  "nodes": [
+    {
+      "languageType": "com.example.module.multiply",
+      "title": "Module Multiply",
+      "category": "プラグイン/モジュール",
+      "description": "モジュール重複管理を確認する掛け算ノード",
+      "inputs": [
+        {
+          "id": "a",
+          "label": "A",
+          "dataType": "number",
+          "required": true
+        },
+        {
+          "id": "b",
+          "label": "B",
+          "dataType": "number",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result",
+          "label": "Result",
+          "dataType": "number"
+        }
+      ],
+      "defaultProperties": {},
+      "requiredModules": [
+        "core.math",
+        "browser.audio"
+      ],
+      "expression": "a * b"
+    }
+  ]
+}

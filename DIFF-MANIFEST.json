@@ -1,0 +1,25 @@
+{
+  "base": "Flow Language v0.13.0 with core value registration fix",
+  "fix": "Register and compile built-in GUI nodes",
+  "registeredNodeTypes": [
+    "gui.label",
+    "gui.button",
+    "gui.input",
+    "gui.row",
+    "gui.column",
+    "gui.window",
+    "gui.show"
+  ],
+  "changedFiles": [
+    "src-tauri/src/language/executor.rs",
+    "src-tauri/src/language/compiler.rs"
+  ],
+  "exportBehavior": {
+    "tauri-gui": "supported",
+    "rust": "returns a clear unsupported-output error",
+    "javascript": "returns a clear unsupported-output error"
+  },
+  "validation": {
+    "cargoCheck": "not run because cargo is unavailable in this environment"
+  }
+}

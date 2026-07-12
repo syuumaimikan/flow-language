@@ -1,0 +1,65 @@
+{
+  "id": "com.example.flow.test-math",
+  "name": "Flow Test Math",
+  "version": "1.0.0",
+  "nodes": [
+    {
+      "languageType": "com.example.math.multiply",
+      "title": "Multiply",
+      "category": "プラグイン/計算",
+      "description": "A × B",
+      "inputs": [
+        {
+          "id": "a",
+          "label": "A",
+          "dataType": "number",
+          "required": true
+        },
+        {
+          "id": "b",
+          "label": "B",
+          "dataType": "number",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result",
+          "label": "Result",
+          "dataType": "number"
+        }
+      ],
+      "defaultProperties": {},
+      "expression": "a * b"
+    },
+    {
+      "languageType": "com.example.math.average",
+      "title": "Average",
+      "category": "プラグイン/計算",
+      "description": "(A + B) ÷ 2",
+      "inputs": [
+        {
+          "id": "a",
+          "label": "A",
+          "dataType": "number",
+          "required": true
+        },
+        {
+          "id": "b",
+          "label": "B",
+          "dataType": "number",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "id": "result",
+          "label": "Result",
+          "dataType": "number"
+        }
+      ],
+      "defaultProperties": {},
+      "expression": "(a + b) / 2"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "配列の行編集",
+  "nodes": [
+    {
+      "id": "array",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 60
+      },
+      "data": {
+        "languageType": "core.array",
+        "title": "Array",
+        "parallel": false,
+        "breakpoint": false,
+        "value": [
+          "りんご",
+          42,
+          true,
+          null,
+          {
+            "name": "太郎",
+            "score": 95
+          }
+        ]
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 650,
+        "y": 120
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "parallel": false,
+        "breakpoint": false,
+        "executionOrder": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "array",
+      "sourceHandle": "value",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.7
+  }
+}

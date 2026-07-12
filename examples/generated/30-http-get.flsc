@@ -1,0 +1,122 @@
+{
+  "fileType": "flow-language-project",
+  "formatVersion": 1,
+  "name": "HTTP GET",
+  "nodes": [
+    {
+      "id": "url",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 60
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "parallel": false,
+        "breakpoint": false,
+        "value": "https://example.com"
+      }
+    },
+    {
+      "id": "method",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 210
+      },
+      "data": {
+        "languageType": "core.string",
+        "title": "String",
+        "parallel": false,
+        "breakpoint": false,
+        "value": "GET"
+      }
+    },
+    {
+      "id": "headers",
+      "type": "flowNode",
+      "position": {
+        "x": 40,
+        "y": 360
+      },
+      "data": {
+        "languageType": "core.object",
+        "title": "Object / Struct",
+        "parallel": false,
+        "breakpoint": false,
+        "value": {
+          "Accept": "text/html"
+        }
+      }
+    },
+    {
+      "id": "http",
+      "type": "flowNode",
+      "position": {
+        "x": 420,
+        "y": 160
+      },
+      "data": {
+        "languageType": "network.http_request",
+        "title": "HTTP Request",
+        "parallel": false,
+        "breakpoint": false,
+        "httpMethod": "GET",
+        "httpTimeoutMs": 15000
+      }
+    },
+    {
+      "id": "print",
+      "type": "flowNode",
+      "position": {
+        "x": 800,
+        "y": 160
+      },
+      "data": {
+        "languageType": "core.print",
+        "title": "Print",
+        "parallel": false,
+        "breakpoint": false,
+        "executionOrder": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "url",
+      "sourceHandle": "value",
+      "target": "http",
+      "targetHandle": "url"
+    },
+    {
+      "id": "e2",
+      "source": "method",
+      "sourceHandle": "value",
+      "target": "http",
+      "targetHandle": "method"
+    },
+    {
+      "id": "e3",
+      "source": "headers",
+      "sourceHandle": "value",
+      "target": "http",
+      "targetHandle": "headers"
+    },
+    {
+      "id": "e4",
+      "source": "http",
+      "sourceHandle": "status",
+      "target": "print",
+      "targetHandle": "input"
+    }
+  ],
+  "plugins": [],
+  "theme": "dark",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.68
+  }
+}
