@@ -13,6 +13,11 @@ use std::{
     process::Command,
 };
 
+const GENERATED_TAURI_ICON: &[u8] =
+    include_bytes!(
+        "../../icons/icon.ico"
+    );
+
 pub fn build_program(
     program: &FlowProgram,
     settings: &BuildSettings,
@@ -725,6 +730,15 @@ fn build_tauri_gui(
     })?;
 
     fs::create_dir_all(
+        workspace.join("icons"),
+    )
+    .map_err(|error| {
+        compiler_error(
+            error.to_string(),
+        )
+    })?;
+
+    fs::create_dir_all(
         &target_cache,
     )
     .map_err(|error| {
@@ -757,6 +771,21 @@ fn build_tauri_gui(
     .map_err(|error| {
         compiler_error(
             error.to_string(),
+        )
+    })?;
+
+    fs::write(
+        workspace
+            .join("icons")
+            .join("icon.ico"),
+        GENERATED_TAURI_ICON,
+    )
+    .map_err(|error| {
+        compiler_error(
+            format!(
+                "生成アプリのアイコンを書き込めません: {}",
+                error,
+            ),
         )
     })?;
 
@@ -838,7 +867,10 @@ serde_json = "1"
     }
   },
   "bundle": {
-    "active": false
+    "active": false,
+    "icon": [
+      "icons/icon.ico"
+    ]
   }
 }"#,
     )

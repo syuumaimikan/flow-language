@@ -1,21 +1,15 @@
 {
-  "base": "Flow Language v0.13 GUI build target fix",
+  "base": "Flow Language v0.13 with GUI build freeze fix",
+  "fix": "Embed and generate icons/icon.ico for exported Tauri GUI projects",
   "changedFiles": [
-    "src-tauri/src/lib.rs",
-    "src-tauri/src/language/compiler.rs",
-    "src/App.tsx",
-    "src/styles.css"
+    "src-tauri/src/language/compiler.rs"
   ],
-  "fixes": [
-    "async Tauri build command",
-    "spawn_blocking compiler execution",
-    "persistent Cargo target cache",
-    "unique source workspace",
-    "visible build progress",
-    "double-click prevention"
+  "generatedAtRuntime": [
+    "icons/icon.ico"
   ],
   "validation": {
-    "typescript": "passed",
-    "cargoCheck": "not run because cargo is unavailable in this environment"
+    "sourceIconExists": true,
+    "typescript": "not affected",
+    "cargoCheck": "not run because cargo is unavailable in this artifact environment"
   }
 }
